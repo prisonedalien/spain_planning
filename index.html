@@ -3,658 +3,306 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spain 2025 · 10-Day Itinerary</title>
+<title>Spain · Trip Itinerary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --cream: #F7F1E8;
-    --parchment: #EDE5D4;
-    --terra: #B85C2A;
-    --terra-light: #F0DDD0;
-    --terra-dark: #8A3F1C;
-    --navy: #1C2B45;
-    --navy-light: #2E4060;
-    --gold: #C9880E;
-    --gold-light: #F5E8C8;
-    --sage: #4A6741;
-    --sage-light: #D8E8D4;
-    --ink: #1A1410;
-    --muted: #7A6F64;
-    --border: rgba(28,43,69,0.12);
-    --shadow: 0 2px 16px rgba(28,43,69,0.08);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: var(--navy);
-    color: white;
-    padding: 2.5rem 1.5rem 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 40px,
-      rgba(255,255,255,0.015) 40px,
-      rgba(255,255,255,0.015) 80px
-    );
-  }
-  .header-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 10px;
-    position: relative;
-  }
-  header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    font-weight: 400;
-    letter-spacing: .01em;
-    color: #fff;
-    line-height: 1.15;
-    position: relative;
-  }
-  header h1 em {
-    font-style: italic;
-    color: #D4A055;
-  }
-  .header-meta {
-    margin-top: 12px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: .03em;
-    position: relative;
-  }
-  .cities {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 16px;
-    position: relative;
-  }
-  .city-pill {
-    background: rgba(255,255,255,0.1);
-    border: 0.5px solid rgba(255,255,255,0.2);
-    border-radius: 99px;
-    padding: 4px 12px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: .02em;
-  }
-
-  /* ── NAV TABS ── */
-  .tab-bar {
-    background: var(--navy-light);
-    display: flex;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 14px 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all .2s;
-    border-bottom: 2px solid transparent;
-    position: relative;
-  }
-  .tab-btn.active {
-    color: #fff;
-    border-bottom-color: #D4A055;
-    font-weight: 500;
-  }
-
-  /* ── MAIN LAYOUT ── */
-  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-
-  .pane { display: none; }
-  .pane.active { display: block; }
-
-  /* ── LEGEND ── */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    margin-bottom: 1.75rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .leg-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: .02em;
-  }
-  .leg-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* ── TIMELINE ── */
-  .day-block { margin-bottom: 1.75rem; }
-  .day-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .day-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .chips-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 13px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 400;
-    cursor: pointer;
-    border: 1.5px solid transparent;
-    transition: transform .1s, box-shadow .1s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .chip:active { transform: scale(0.97); }
-  .chip.active { box-shadow: 0 0 0 2px var(--navy); }
-
-  .chip-transport { background: #DDEAF7; color: #1A4070; }
-  .chip-hotel     { background: var(--sage-light); color: #2D5028; }
-  .chip-activity  { background: var(--parchment); color: #3A3028; border-color: rgba(28,43,69,0.15) !important; }
-  .chip-food      { background: var(--gold-light); color: #7A4E08; }
-  .chip-show      { background: #F0D8E8; color: #6A2050; }
-
-  /* ── DETAIL PANEL ── */
-  .detail-panel {
-    background: white;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 1.25rem 1.5rem;
-    margin-top: 1rem;
-    display: none;
-    animation: slideIn .2s ease;
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .detail-panel.visible { display: block; }
-  .dp-category {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .dp-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.45rem;
-    font-weight: 600;
-    line-height: 1.25;
-    color: var(--navy);
-    margin-bottom: 4px;
-  }
-  .dp-meta {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 12px;
-    letter-spacing: .02em;
-  }
-  .dp-body {
-    font-size: 14px;
-    line-height: 1.75;
-    color: var(--ink);
-  }
-  .dp-tip {
-    margin-top: 12px;
-    padding: 10px 14px;
-    background: var(--gold-light);
-    border-left: 3px solid var(--gold);
-    border-radius: 0 6px 6px 0;
-    font-size: 13px;
-    color: #5A3A08;
-    line-height: 1.6;
-  }
-  .dp-tip strong {
-    font-weight: 500;
-    display: block;
-    margin-bottom: 2px;
-    font-size: 11px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  /* ── FULL ITINERARY ── */
-  .fi-day {
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .fi-day:last-child { border-bottom: none; }
-  .fi-day-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 1.25rem;
-  }
-  .fi-day-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
-    font-weight: 400;
-    color: var(--parchment);
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  .fi-day-info {}
-  .fi-day-date {
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: .03em;
-  }
-  .fi-day-city {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.2;
-  }
-
-  .fi-events { display: flex; flex-direction: column; gap: 0; }
-  .fi-event {
-    padding: 14px 0 14px 18px;
-    border-left: 2px solid var(--border);
-    position: relative;
-  }
-  .fi-event::before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    top: 20px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--parchment);
-    border: 1.5px solid var(--border);
-  }
-  .fi-event-transport::before { background: #DDEAF7; border-color: #7AAAD8; }
-  .fi-event-hotel::before     { background: var(--sage-light); border-color: var(--sage); }
-  .fi-event-activity::before  { background: var(--parchment); border-color: #8A7A6A; }
-  .fi-event-food::before      { background: var(--gold-light); border-color: var(--gold); }
-  .fi-event-show::before      { background: #F0D8E8; border-color: #C060A0; }
-
-  .fi-event-name {
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--ink);
-    margin-bottom: 2px;
-  }
-  .fi-event-time {
-    font-size: 11px;
-    letter-spacing: .04em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 7px;
-  }
-  .fi-event-body {
-    font-size: 14px;
-    line-height: 1.75;
-    color: #3D3530;
-  }
-  .fi-event-tip {
-    margin-top: 8px;
-    font-size: 13px;
-    color: #7A5010;
-    font-style: italic;
-  }
-  .fi-event-tip::before { content: '→ '; font-style: normal; }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-    background: var(--parchment);
-  }
-
-  /* ── MOBILE ── */
-  @media (max-width: 480px) {
-    header { padding: 2rem 1rem 1.5rem; }
-    main { padding: 1.5rem 1rem 3rem; }
-    .chip { font-size: 12px; padding: 5px 10px; }
-    .fi-day-num { font-size: 2.5rem; }
-    .dp-name { font-size: 1.25rem; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F7F1E8;--parchment:#EDE5D4;--navy:#1C2B45;--navy2:#2E4060;
+  --gold:#C9880E;--gold-lt:#F5E8C8;--sage:#4A6741;--sage-lt:#D8E8D4;
+  --ink:#1A1410;--muted:#7A6F64;--border:rgba(28,43,69,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);font-size:15px;line-height:1.6;min-height:100vh}
+header{background:var(--navy);color:#fff;padding:2.5rem 1.5rem 1.75rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 80px)}
+.hdr-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;position:relative}
+header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:400;color:#fff;line-height:1.15;position:relative}
+header h1 em{font-style:italic;color:#D4A055}
+.hdr-meta{margin-top:8px;font-size:13px;color:rgba(255,255,255,.4);position:relative}
+.hdr-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;position:relative}
+.hdr-pill{background:rgba(255,255,255,.1);border:.5px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 11px;font-size:12px;color:rgba(255,255,255,.65)}
+.tab-bar{background:var(--navy2);display:flex;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,0,0,.2)}
+.tab-btn{flex:1;padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s}
+.tab-btn.active{color:#fff;border-bottom-color:#D4A055;font-weight:500}
+main{max-width:840px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+.pane{display:none}.pane.active{display:block}
+.picker-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-bottom:1.25rem;scrollbar-width:none}
+.picker-wrap::-webkit-scrollbar{display:none}
+.picker{display:flex;gap:7px;min-width:max-content}
+.dpill{display:flex;flex-direction:column;align-items:center;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:white;cursor:pointer;transition:all .15s;min-width:56px}
+.dpill:hover{border-color:var(--navy)}
+.dpill.on{background:var(--navy);border-color:var(--navy)}
+.dpill .d-wd{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dpill .d-nm{font-size:19px;font-weight:300;color:var(--ink);line-height:1.1}
+.dpill .d-ct{font-size:9px;color:var(--muted);max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.dpill.on .d-wd,.dpill.on .d-nm,.dpill.on .d-ct{color:rgba(255,255,255,.8)}
+.dpill.on .d-nm{color:#fff}
+.cal-hdr{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--navy);margin-bottom:.875rem}
+.cal-hdr span{font-size:.85rem;font-weight:400;font-family:'DM Sans',sans-serif;color:var(--muted);margin-left:8px}
+.cal-wrap{position:relative}
+.tline{position:absolute;left:0;right:0;height:1px;background:var(--border)}
+.tlabel{position:absolute;left:0;font-size:11px;color:var(--muted);text-align:right;transform:translateY(-50%);white-space:nowrap;letter-spacing:.02em}
+.evb{position:absolute;border-radius:6px;padding:5px 8px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;transition:opacity .15s,box-shadow .15s}
+.evb:hover{opacity:.82}
+.evb.on{box-shadow:0 0 0 2.5px var(--navy)}
+.evb-t{font-size:10px;opacity:.65;flex-shrink:0;line-height:1.2;margin-bottom:1px}
+.evb-n{font-size:12px;font-weight:500;line-height:1.3;flex:1;overflow:hidden}
+.evb-l{font-size:10px;opacity:.55;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.evb-flag{position:absolute;top:4px;right:5px;font-size:9px;font-weight:600;letter-spacing:.04em;padding:1px 4px;border-radius:3px}
+.flag-book{background:rgba(180,50,20,.15);color:#802810}
+.flag-warn{background:rgba(200,100,0,.22);color:#7A3A00;font-size:11px}
+.ct{background:#DCE8F5;color:#1A3D6A}
+.ch{background:#D5E6D0;color:#28481F}
+.ca{background:#ECE4D2;color:#382C20}
+.cf{background:#F4E5C4;color:#7A4C08}
+.cs{background:#EED5E8;color:#5E1C4A}
+.cs.sp{background:#E8D2F2;border:1px solid rgba(160,80,200,.25)}
+.dp{background:white;border-radius:10px;border:1px solid var(--border);box-shadow:0 2px 16px rgba(28,43,69,.08);padding:1.25rem 1.5rem;margin-top:1.25rem;display:none;animation:fdin .2s ease}
+@keyframes fdin{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.dp.on{display:block}
+.dp-cat{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.dp-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--navy);margin-bottom:4px;line-height:1.25}
+.dp-meta{font-size:12px;color:var(--muted);margin-bottom:11px}
+.dp-body{font-size:14px;line-height:1.75;color:var(--ink);white-space:pre-line}
+.dp-note{margin-top:11px;padding:9px 13px;background:var(--gold-lt);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:13px;color:#5A3A08;line-height:1.6;white-space:pre-line}
+.dp-note strong{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.dp-warn{background:#FFF0D8;border-left-color:#D4650A}
+.dp-warn strong{color:#A04A00}
+.dp-body a,.dp-note a,.fi-ev-body a{color:var(--navy);text-decoration:underline}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.leg{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.leg-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.fi-day{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.fi-day:last-child{border-bottom:none}
+.fi-dhdr{display:flex;align-items:baseline;gap:12px;margin-bottom:1.1rem}
+.fi-dn{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;color:var(--parchment);line-height:1;flex-shrink:0}
+.fi-dc{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;color:var(--navy)}
+.fi-dd{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.fi-evs{display:flex;flex-direction:column}
+.fi-ev{padding:11px 0 11px 16px;border-left:2px solid var(--border);position:relative}
+.fi-ev::before{content:'';position:absolute;left:-5px;top:17px;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border);background:var(--parchment)}
+.fi-ev.ct::before{background:#DCE8F5;border-color:#7AAAD8}
+.fi-ev.ch::before{background:#D5E6D0;border-color:var(--sage)}
+.fi-ev.ca::before{background:var(--parchment);border-color:#8A7A6A}
+.fi-ev.cf::before{background:var(--gold-lt);border-color:var(--gold)}
+.fi-ev.cs::before{background:#EED5E8;border-color:#B060A0}
+.fi-ev-time{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.fi-ev-name{font-weight:500;font-size:14px;margin-bottom:2px}
+.fi-ev-loc{font-size:12px;color:var(--muted);margin-bottom:6px}
+.fi-ev-body{font-size:14px;line-height:1.7;color:#3D3530;white-space:pre-line}
+.fi-badge{display:inline-block;font-size:11px;font-weight:500;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
+.fi-badge-book{background:#FDE8E0;color:#802810}
+.fi-badge-warn{background:#FFF0D8;color:#7A3A00}
+footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:var(--muted);border-top:1px solid var(--border);background:var(--parchment)}
+@media(max-width:480px){
+  header{padding:1.75rem .875rem 1.5rem}
+  main{padding:1.25rem .875rem 3rem}
+  .dp-name{font-size:1.2rem}
+  .fi-dn{font-size:2.2rem}
+}
 </style>
 </head>
 <body>
-
 <header>
-  <p class="header-label">Group Travel · June 2025</p>
-  <h1><em>España</em> — 10 Days</h1>
-  <p class="header-meta">Madrid · Toledo · Seville · Granada · Barcelona</p>
-  <div class="cities">
-    <span class="city-pill">Jun 2 – Jun 11</span>
-    <span class="city-pill">10 days</span>
-    <span class="city-pill">5 cities</span>
+  <p class="hdr-label">Group Travel Itinerary</p>
+  <h1><em>España</em> — 9 Days</h1>
+  <p class="hdr-meta">Madrid · Barcelona · Segovia · Toledo</p>
+  <div class="hdr-pills">
+    <span class="hdr-pill">9 nights</span>
+    <span class="hdr-pill">4 cities</span>
   </div>
 </header>
-
-<nav class="tab-bar" role="tablist">
-  <button class="tab-btn active" onclick="switchTab('timeline')" role="tab">Timeline</button>
-  <button class="tab-btn" onclick="switchTab('itinerary')" role="tab">Full itinerary</button>
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('cal')">Calendar</button>
+  <button class="tab-btn" onclick="switchTab('fi')">Full itinerary</button>
 </nav>
-
 <main>
-
-  <!-- TIMELINE PANE -->
-  <div id="pane-timeline" class="pane active">
-    <div class="legend" aria-label="Color legend">
-      <div class="leg-item"><div class="leg-dot" style="background:#7AAAD8"></div>Transport</div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--sage)"></div>Hotel</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#8A7A6A"></div>Activity</div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div>Food &amp; drink</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#C060A0"></div>Show</div>
+  <div id="pane-cal" class="pane active">
+    <div class="legend">
+      <div class="leg"><div class="leg-d" style="background:#5A90C8"></div>Transport</div>
+      <div class="leg"><div class="leg-d" style="background:var(--sage)"></div>Hotel</div>
+      <div class="leg"><div class="leg-d" style="background:#8A7A6A"></div>Activity</div>
+      <div class="leg"><div class="leg-d" style="background:var(--gold)"></div>Food &amp; drink</div>
+      <div class="leg"><div class="leg-d" style="background:#B060A0"></div>Show / Special</div>
     </div>
-    <div id="timeline-container"></div>
-    <div id="detail-panel" class="detail-panel" role="region" aria-label="Event details">
-      <p class="dp-category" id="dp-cat"></p>
+    <div class="picker-wrap"><div class="picker" id="picker"></div></div>
+    <div class="cal-hdr" id="cal-hdr"></div>
+    <div id="cal-body"></div>
+    <div id="dp" class="dp">
+      <p class="dp-cat" id="dp-cat"></p>
       <p class="dp-name" id="dp-name"></p>
       <p class="dp-meta" id="dp-meta"></p>
       <p class="dp-body" id="dp-body"></p>
-      <div class="dp-tip" id="dp-tip" style="display:none">
-        <strong>Tip</strong>
-        <span id="dp-tip-text"></span>
-      </div>
+      <div id="dp-note" class="dp-note" style="display:none"><strong id="dp-note-lbl">Note</strong><span id="dp-note-txt"></span></div>
     </div>
   </div>
-
-  <!-- ITINERARY PANE -->
-  <div id="pane-itinerary" class="pane">
-    <div id="itinerary-container"></div>
+  <div id="pane-fi" class="pane">
+    <div id="fi-body"></div>
   </div>
-
 </main>
-
-<footer>
-  <p>Last updated: <span id="last-updated"></span></p>
-  <p style="margin-top:4px;opacity:.6">Tap any event in the Timeline to see full details &amp; tips</p>
-</footer>
-
+<footer>Tap any block to see full details &amp; notes</footer>
 <script>
-// ─────────────────────────────────────────────
-//  ITINERARY DATA — edit this to update the trip
-// ─────────────────────────────────────────────
-const DAYS = [
-  {
-    day: 1, date: "Mon, Jun 2", city: "Madrid",
-    events: [
-      { cat: "transport", label: "✈ Fly to MAD",        name: "Flight to Madrid",              time: "Departs 8:00 AM",      body: "Depart on Iberia IB6251 from JFK. Flight duration approximately 8 hours with in-flight meal. Arrive Madrid Barajas T4S at approximately 10:00 PM local time.", tip: "Download the Iberia app for your boarding pass. Madrid is UTC+2 in summer." },
-      { cat: "transport", label: "🚇 Metro to hotel",    name: "Airport → Hotel transfer",       time: "~10:30 PM",            body: "Take Line 8 (pink) from T4 to Nuevos Ministerios, switch to Line 10 toward Gran Vía. Journey ~35 min, €5. Alternatively a taxi is ~€35 flat rate to city center.", tip: "" },
-      { cat: "hotel",     label: "🏨 Hotel Urso",        name: "Check-in: Hotel Urso",           time: "Late arrival",         body: "5-star boutique hotel on Calle Mejía Lequerica in Alonso Martínez. Confirmation #UR8821. Notify the hotel of late arrival in advance. Complimentary welcome drink at the bar.", tip: "Ask for a quiet room away from the street." }
-    ]
-  },
-  {
-    day: 2, date: "Tue, Jun 3", city: "Madrid",
-    events: [
-      { cat: "food",      label: "☕ Café Gijón",        name: "Breakfast: Café Gijón",          time: "9:00 AM",              body: "Historic literary café on Paseo de Recoletos, frequented by Madrid's intellectuals since 1888. Order the tostada con tomate y jamón and a café con leche.", tip: "" },
-      { cat: "activity",  label: "🖼 Prado Museum",      name: "Museo del Prado",                time: "10:30 AM – 1:30 PM",   body: "One of the world's great art museums. Don't miss Velázquez's Las Meninas, Goya's Black Paintings, and El Greco's The Nobleman with his Hand on his Chest. Pre-book timed entry (~€15). Free entry 6–8 PM.", tip: "Audio guide is worth the €4. Allow 2–3 hours minimum." },
-      { cat: "food",      label: "🥘 San Miguel Market", name: "Lunch: Mercado de San Miguel",   time: "1:30 PM",              body: "The iconic covered market just off Plaza Mayor — ideal for a tapas-style lunch. Grab tortilla española, fresh oysters, croquetas, and a glass of cava. Budget €20–30 per person.", tip: "Gets very crowded noon–2 PM. Go early or late." },
-      { cat: "activity",  label: "🌳 Retiro Park",       name: "Retiro Park stroll",             time: "2:00 – 3:30 PM",       body: "Madrid's beloved central park. Walk to the Palacio de Cristal (free art exhibitions), rent a rowboat on the lake (~€6 for 45 min), and stroll the Rose Garden — peak bloom in June.", tip: "" },
-      { cat: "food",      label: "🍷 La Latina tapas",   name: "Dinner: La Latina tapas crawl", time: "9:00 PM",              body: "Head to La Latina for a classic Madrid tapas crawl. Start at Casa Lucio for huevos rotos, hit Juana La Loca for their tortilla, finish at El Ventorrillo for wine.", tip: "Spaniards eat dinner late — don't show up before 9 PM. Most bars are cash only." }
-    ]
-  },
-  {
-    day: 3, date: "Wed, Jun 4", city: "Madrid",
-    events: [
-      { cat: "activity",  label: "👑 Royal Palace",      name: "Palacio Real",                  time: "9:30 AM – 12:00 PM",   body: "Europe's largest royal palace by floor area. Highlights: the Throne Room, Royal Armory, and frescoed ceilings by Tiepolo and Mengs. Entry ~€12.", tip: "Arrive at opening to beat tour groups. Free on Wednesdays for EU citizens." },
-      { cat: "activity",  label: "🎨 Thyssen Museum",    name: "Thyssen-Bornemisza Museum",      time: "1:00 – 3:30 PM",       body: "Completes Madrid's Golden Triangle of Art with the Prado and Reina Sofía. Exceptional collection spanning medieval to 20th century. Superb Impressionist floor. ~€13.", tip: "" },
-      { cat: "food",      label: "🍫 Churros San Ginés", name: "Churros at San Ginés",           time: "4:00 PM",              body: "The legendary Chocolatería San Ginés, open since 1894. Try the porras (thick churros) with dense hot chocolate for dipping. Tucked in an alley off Calle Arenal.", tip: "" },
-      { cat: "show",      label: "💃 Flamenco show",     name: "Flamenco: Cardamomo",            time: "8:30 PM",              body: "Cardamomo on Calle Echegaray is one of Madrid's most authentic small venues (seating ~80). One drink included (~€35). Expect raw emotion, footwork, and guitar. Show lasts ~90 min.", tip: "Book 2+ weeks in advance. Dress smart-casual. Arrive 15 min early." }
-    ]
-  },
-  {
-    day: 4, date: "Thu, Jun 5", city: "Toledo (day trip)",
-    events: [
-      { cat: "transport", label: "🚄 Train to Toledo",   name: "AVE train to Toledo",            time: "8:45 AM",              body: "High-speed AVE from Madrid Atocha to Toledo. Only 33 minutes, ~€13 each way. Buy in advance at Renfe.com. Return train booked for 6:30 PM.", tip: "Trains run every 2 hours." },
-      { cat: "activity",  label: "⛪ Toledo Cathedral",  name: "Toledo Cathedral",               time: "10:00 AM",             body: "One of Spain's greatest Gothic cathedrals, construction began 1226. See El Greco's El Espolio in the Sacristy, the elaborate Choir stalls, and the Transparente Baroque altarpiece. Entry €10.", tip: "The treasury room alone is worth the entry." },
-      { cat: "activity",  label: "🏰 Toledo Alcázar",   name: "Alcázar of Toledo",              time: "11:30 AM",             body: "The imposing fortress at Toledo's highest point, now an Army Museum. Views of the Tagus River gorge are spectacular. Free on Sundays.", tip: "" },
-      { cat: "food",      label: "🍽 Adolfo Toledo",     name: "Lunch: Adolfo Colección",        time: "2:00 PM",              body: "Michelin-recommended restaurant inside a 15th-century palace. Try partridge in escabeche, venison, or the tasting menu (~€45). Toledo cuisine features game, mazapán, and Manchego.", tip: "Make a reservation — this is a special spot." },
-      { cat: "transport", label: "🚄 Return Madrid",     name: "Return to Madrid",               time: "6:30 PM",              body: "Train back to Madrid Atocha at 6:30 PM, arriving ~7:05 PM. Optional: explore Gran Vía or a quiet dinner near the hotel.", tip: "" }
-    ]
-  },
-  {
-    day: 5, date: "Fri, Jun 6", city: "→ Seville",
-    events: [
-      { cat: "transport", label: "🚄 Train to Seville",  name: "AVE train to Seville",           time: "9:00 AM",              body: "High-speed AVE from Madrid Puerta de Atocha to Seville Santa Justa. Duration: 2h 30min, ~€50–70. Book standard class for comfort. Board 15 min early.", tip: "" },
-      { cat: "hotel",     label: "🏨 Alfonso XIII",      name: "Check-in: Hotel Alfonso XIII",   time: "12:30 PM",             body: "Seville's most iconic hotel, built 1929 in neo-Mudéjar style around a central courtyard. Right across from the Alcázar. Confirmation #AL2291. Pool available. Afternoon cocktail in the courtyard is a must.", tip: "" },
-      { cat: "activity",  label: "🌺 Santa Cruz walk",   name: "Barrio Santa Cruz wander",       time: "2:00 PM",              body: "Get delightfully lost in Seville's former Jewish quarter. Whitewashed alleys, flower-draped balconies, hidden plazas. Find Plaza de Doña Elvira and the Hospital de los Venerables. No agenda — just wander.", tip: "" },
-      { cat: "food",      label: "🍤 Seville tapas",     name: "Tapas: El Rinconcillo + Bodeguita", time: "8:30 PM",           body: "El Rinconcillo (est. 1670!) is Seville's oldest bar. Order spinach with chickpeas, cured ham, and a chilled manzanilla. Continue to Bodeguita Casablanca for their legendary prawn tortilla. Budget €25–35.", tip: "El Rinconcillo chalks your tab on the bar — keep track!" }
-    ]
-  },
-  {
-    day: 6, date: "Sat, Jun 7", city: "Seville",
-    events: [
-      { cat: "activity",  label: "🕌 Seville Alcázar",  name: "Real Alcázar of Seville",        time: "9:00 AM (opening)",    body: "A UNESCO World Heritage Site — a royal palace continuously inhabited since the 10th century. Mudéjar architecture, tiled courtyards, and lush gardens. Pre-book entry ~€13.50.", tip: "Book the first entry slot. It gets very crowded by 10:30 AM." },
-      { cat: "activity",  label: "🗼 Giralda tower",    name: "Cathedral & Giralda tower",      time: "11:30 AM",             body: "The largest Gothic cathedral in the world. Climb the Giralda tower (a ramp, not stairs — designed for horses!) for panoramic views over Seville. Inside: Columbus's tomb and the gilded retablo. ~€10.", tip: "Comfortable shoes essential. The ramp has 35 levels." },
-      { cat: "food",      label: "🥗 La Azotea",        name: "Lunch: La Azotea",               time: "2:00 PM",              body: "Modern Sevillano cuisine at its finest. Creative tapas — foie gras croquettes, slow-cooked oxtail, signature tuna. Lively atmosphere, reasonable prices (~€30 per person).", tip: "The Jesús del Gran Poder branch is the best." },
-      { cat: "activity",  label: "🏛 Plaza de España",  name: "Plaza de España",                time: "5:00 PM",              body: "A sweeping semi-circular plaza built for the 1929 Ibero-American Exposition. Walk its full length, rent a rowboat in the canal, visit the provincial tile alcoves. Spectacular in golden hour.", tip: "Stay for sunset — the warm light here is extraordinary." }
-    ]
-  },
-  {
-    day: 7, date: "Sun, Jun 8", city: "→ Granada",
-    events: [
-      { cat: "transport", label: "🚌 Bus to Granada",   name: "Bus to Granada",                 time: "9:00 AM",              body: "ALSA bus from Seville's Prado de San Sebastián station to Granada. Duration ~3 hours, ~€22. Book in advance at alsa.com. Comfortable coaches with WiFi and USB charging.", tip: "Sit on the right side for the best views." },
-      { cat: "hotel",     label: "🏨 Parador Granada",  name: "Check-in: Parador de Granada",   time: "12:30 PM",             body: "Spain's most coveted parador — a former convent built inside the Alhambra complex itself. Reservation #PG5501. Book dinner at the parador restaurant in advance. Magical waking up inside the Alhambra gardens.", tip: "This may be the single most special hotel location in all of Spain." },
-      { cat: "activity",  label: "🌍 Albaicín walk",    name: "Albaicín neighborhood",          time: "3:00 PM",              body: "Granada's ancient Moorish quarter and a UNESCO Heritage Site. Wander steep cobblestone streets to the Mirador de San Nicolás for the most iconic view of the Alhambra. Best without a map.", tip: "" },
-      { cat: "show",      label: "💃 Cave flamenco",    name: "Cave flamenco: Zambra María la Canastera", time: "9:00 PM",   body: "Sacromonte is Granada's cave district, home to gitano (Romani) flamenco traditions. Zambra María la Canastera is the most authentic — an intimate family cave home turned show space. Dinner + show ~€55, includes transport.", tip: "More raw and emotional than Madrid's polished shows." }
-    ]
-  },
-  {
-    day: 8, date: "Mon, Jun 9", city: "Granada",
-    events: [
-      { cat: "activity",  label: "🏯 Nasrid Palaces",   name: "Alhambra — Nasrid Palaces",      time: "9:00 AM timed entry",  body: "The jewel of Moorish architecture in Europe. Timed entry is 9 AM — latecomers are turned away. Focus on the Comares throne room, the Court of the Lions, and the Lindaraja Garden. Allow 2 hours.", tip: "CRITICAL: Bring printed/digital ticket. Latecomers refused. Book months in advance at alhambra.org." },
-      { cat: "activity",  label: "🌿 Generalife",       name: "Generalife Gardens",             time: "11:30 AM",             body: "The Alhambra's summer palace and terraced gardens — fountains, cypress allées, views of the Sierra Nevada. Peaceful and far less crowded than the Nasrid Palaces. Allow 1.5 hours.", tip: "" },
-      { cat: "activity",  label: "🏰 Alcazaba",         name: "Alcazaba Fortress",              time: "1:00 PM",              body: "The oldest part of the Alhambra, a 9th-century military fortress. Climb the Torre de la Vela for 360° panoramic views over Granada, the Albaicín, and the Sierra Nevada.", tip: "" },
-      { cat: "food",      label: "🍛 Azafrán lunch",    name: "Lunch: Ruta del Azafrán",        time: "3:00 PM",              body: "Just below the Alhambra walls, serving excellent modern Andalusian cuisine with a view. Try the cold almond soup (ajo blanco), slow-roasted lamb, and pionono dessert — a Granada specialty.", tip: "" }
-    ]
-  },
-  {
-    day: 9, date: "Tue, Jun 10", city: "→ Barcelona",
-    events: [
-      { cat: "transport", label: "✈ Fly to BCN",        name: "Flight Granada → Barcelona",     time: "10:00 AM",             body: "Vueling VY2105, Granada Federico García Lorca Airport to Barcelona El Prat. Duration ~1h 40min. Arrive ~11:40 AM. Take the Aerobus to Plaça Catalunya (~€6.75, 35 min).", tip: "" },
-      { cat: "hotel",     label: "🏨 Hotel Arts",       name: "Check-in: Hotel Arts Barcelona", time: "1:00 PM",              body: "Iconic 44-floor Ritz-Carlton tower on the Barcelona waterfront. Confirmation #HA9981. Ask for a sea-view room. Infinity pool on the 43rd floor has spectacular views.", tip: "Pool access included. Go up before sunset for champagne views over the Mediterranean." },
-      { cat: "activity",  label: "🏛 Gothic Quarter",   name: "Gothic Quarter & Las Ramblas",   time: "3:00 PM",              body: "Explore the Barri Gòtic — Barcelona's medieval core. Find the hidden Roman temple of Augustus, walk across the Pont del Bisbe, linger in Plaça Reial. Stroll Las Ramblas briefly.", tip: "Keep your bag in front. Eat one block from Las Ramblas for half the price." },
-      { cat: "food",      label: "🍸 Barcelona dinner", name: "Dinner: Tickets or Bar Calders", time: "9:00 PM",              body: "First choice: Tickets, Albert Adrià's avant-garde tapas bar (book 3+ months in advance, ~€60). Alternative: Bar Calders in Sant Antoni — beloved local vermut and tapas, no reservation needed.", tip: "" }
-    ]
-  },
-  {
-    day: 10, date: "Wed, Jun 11", city: "Barcelona → Home",
-    events: [
-      { cat: "activity",  label: "⛩ Sagrada Família",  name: "Sagrada Família",                time: "9:00 AM",              body: "Gaudí's unfinished masterpiece. Book timed entry with tower access (~€26–36). Arrive at opening for morning light through the stained glass — an extraordinary kaleidoscopic effect inside the nave. Expected completion: 2026.", tip: "The Nativity tower has better views. Book tower access when buying tickets." },
-      { cat: "activity",  label: "🏖 Barceloneta",      name: "La Barceloneta beach",           time: "11:30 AM",             body: "A final couple of hours on Barcelona's city beach. Water is clean and warm in June. Cold beer at a chiringuito (beach bar). Walk north toward Port Olímpic for quieter stretches.", tip: "" },
-      { cat: "food",      label: "🦞 Seafood farewell", name: "Last lunch: Bar La Mar",         time: "1:30 PM",              body: "Final meal — Barcelona's finest paella or fideuà (noodle paella). Order the mixed paella or grilled razor clams. ~€25–35 per person. A perfect farewell to Spain.", tip: "Fresh paella made to order — expect a 30 min wait. Entirely worth it." },
-      { cat: "transport", label: "✈ Fly home",          name: "Airport transfer & fly home",    time: "Allow 3 hrs before flight", body: "Take the Aerobus from Plaça Catalunya to El Prat (~35 min). Allow 3 hours for international flights. Check which terminal (T1 or T2) your airline uses — they are separate buildings.", tip: "T1 and T2 are connected by a free shuttle, but add 20 min if transferring between them." }
-    ]
-  }
-];
-
-// ─────────────────────────────────────────────
-//  RENDER LOGIC — no need to edit below here
-// ─────────────────────────────────────────────
-
-const CAT_CLASS = {
-  transport: 'chip-transport',
-  hotel:     'chip-hotel',
-  activity:  'chip-activity',
-  food:      'chip-food',
-  show:      'chip-show'
-};
-
-const CAT_LABEL = {
-  transport: 'Transport',
-  hotel:     'Accommodation',
-  activity:  'Activity',
-  food:      'Food & Drink',
-  show:      'Show / Entertainment'
-};
-
-const CAT_COLOR = {
-  transport: '#1A4070',
-  hotel:     '#2D5028',
-  activity:  '#3A3028',
-  food:      '#7A4E08',
-  show:      '#6A2050'
-};
-
-let selectedId = null;
-
-function buildTimeline() {
-  const container = document.getElementById('timeline-container');
-  let html = '';
-  DAYS.forEach((day, di) => {
-    html += `<div class="day-block">
-      <div class="day-label">Day ${day.day} &mdash; ${day.date} &middot; ${day.city}</div>
-      <div class="chips-row">`;
-    day.events.forEach((ev, ei) => {
-      const id = `${di}-${ei}`;
-      html += `<button class="chip ${CAT_CLASS[ev.cat]}" id="chip-${id}" onclick="selectEvent('${id}')" aria-label="${ev.name}">${ev.label}</button>`;
-    });
-    html += `</div></div>`;
+const ACTIVITIES = [];
+let DAYS = [];
+</script>
+<script src="activities/day1_flight_depart.js"></script>
+<script src="activities/day2_flight_arrive.js"></script>
+<script src="activities/day2_train_to_city.js"></script>
+<script>
+// Group and sort the loaded activities
+function initActivities() {
+  const daysMap = new Map();
+  ACTIVITIES.forEach(act => {
+    if (!daysMap.has(act.dt)) {
+      daysMap.set(act.dt, { wd: act.wd, dt: act.dt, sd: act.sd, city: act.city, ev: [] });
+    }
+    const { wd, dt, sd, city, ...eventProps } = act;
+    daysMap.get(act.dt).ev.push(eventProps);
   });
-  container.innerHTML = html;
-}
 
-function selectEvent(id) {
-  if (selectedId) {
-    const prev = document.getElementById('chip-' + selectedId);
-    if (prev) prev.classList.remove('active');
-  }
-  const panel = document.getElementById('detail-panel');
-  if (selectedId === id) {
-    selectedId = null;
-    panel.classList.remove('visible');
-    return;
-  }
-  selectedId = id;
-  const [di, ei] = id.split('-').map(Number);
-  const day = DAYS[di];
-  const ev  = day.events[ei];
-
-  document.getElementById('chip-' + id).classList.add('active');
-  document.getElementById('dp-cat').textContent  = CAT_LABEL[ev.cat];
-  document.getElementById('dp-cat').style.color  = CAT_COLOR[ev.cat];
-  document.getElementById('dp-name').textContent = ev.name;
-  document.getElementById('dp-meta').textContent = ev.time + '  ·  Day ' + day.day + '  ·  ' + day.city;
-  document.getElementById('dp-body').textContent = ev.body;
-
-  const tipEl   = document.getElementById('dp-tip');
-  const tipText = document.getElementById('dp-tip-text');
-  if (ev.tip) {
-    tipText.textContent = ev.tip;
-    tipEl.style.display = 'block';
-  } else {
-    tipEl.style.display = 'none';
-  }
-
-  panel.classList.add('visible');
-  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-}
-
-function buildItinerary() {
-  const container = document.getElementById('itinerary-container');
-  let html = '';
+  DAYS = Array.from(daysMap.values()).sort((a, b) => parseInt(a.dt) - parseInt(b.dt));
   DAYS.forEach(day => {
-    html += `<div class="fi-day">
-      <div class="fi-day-header">
-        <div class="fi-day-num">${String(day.day).padStart(2,'0')}</div>
-        <div class="fi-day-info">
-          <div class="fi-day-date">${day.date}</div>
-          <div class="fi-day-city">${day.city}</div>
-        </div>
+    day.ev.sort((a, b) => toMins(a.s) - toMins(b.s));
+  });
+
+  buildPicker();
+  if (DAYS.length > 0) renderDay(0);
+  buildFI();
+}
+const toMins=t=>{if(!t)return 0; const[h,m]=t.split(':').map(Number);return (h||0)*60+(m||0)};
+const fmtT=t=>{if(!t)return ''; const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM',hr=h>12?h-12:(h===0?12:h);return m===0?`${hr} ${ap}`:`${hr}:${String(m).padStart(2,'0')} ${ap}`};
+const CAT_LBL={ct:'Transport',ch:'Accommodation',ca:'Activity',cf:'Food & Drink',cs:'Show / Special'};
+const CAT_CLR={ct:'#1A3D6A',ch:'#28481F',ca:'#382C20',cf:'#7A4C08',cs:'#5E1C4A'};
+const PX_MIN=1.15,T_COL=52,EV_L=T_COL+10,GRID_P=12,MIN_H=40;
+let activeDay=0,activeKey=null;
+
+function escapeHtml(s){
+  return String(s??'').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function linkifyNotes(text){
+  const safe = escapeHtml(text ?? '');
+  const withLinks = safe.replace(/\bhttps?:\/\/[^\s<]+/gi, url =>
+    `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+  );
+  return withLinks.replace(/\n/g,'<br>');
+}
+function buildPicker(){
+  document.getElementById('picker').innerHTML=DAYS.map((d,i)=>
+    `<button class="dpill${i===0?' on':''}" id="dpill${i}" onclick="selDay(${i})">
+      <span class="d-wd">${d.wd}</span><span class="d-nm">${d.dt}</span>
+      <span class="d-ct">${d.city.replace('to ','')}</span></button>`).join('');
+}
+function selDay(i){
+  document.querySelectorAll('.dpill').forEach((p,j)=>p.classList.toggle('on',j===i));
+  activeDay=i;activeKey=null;document.getElementById('dp').classList.remove('on');
+  renderDay(i);
+  const pill=document.getElementById('dpill'+i);
+  if(pill)pill.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+function renderDay(di){
+  const day=DAYS[di];
+  document.getElementById('cal-hdr').innerHTML=`${day.wd}, Day ${day.dt} <span>${day.city}</span>`;
+  const allM=day.ev.flatMap(e=>[toMins(e.s||'00:00'),toMins(e.e||'23:59')]);
+  const bS=Math.floor(Math.min(...allM)/60)*60,bE=Math.ceil(Math.max(...allM)/60)*60;
+  const totH=(bE-bS)*PX_MIN+GRID_P*2;
+  let html='';
+  for(let m=bS;m<=bE;m+=60){
+    const top=(m-bS)*PX_MIN+GRID_P;
+    const realH=Math.floor(m/60)%24;
+    const lbl=fmtT(String(realH).padStart(2,'0')+':00');
+    html+=`<div class="tlabel" style="top:${top}px;left:0;width:${T_COL}px">${lbl}</div>
+           <div class="tline" style="top:${top}px;left:${T_COL}px"></div>`;
+  }
+  day.ev.forEach((ev,ei)=>{
+    const key=`${di}-${ei}`;
+    const topPx=(toMins(ev.s||'00:00')-bS)*PX_MIN+GRID_P;
+    const htPx=Math.max((toMins(ev.e||'23:59')-toMins(ev.s||'00:00'))*PX_MIN,MIN_H);
+    const spCls=ev.sp?' sp':'',onCls=key===activeKey?' on':'';
+    const nm=ev.n;
+    
+    let timeDisp = '';
+    if(ev.s && ev.e) timeDisp = fmtT(ev.s) + ' – ' + fmtT(ev.e);
+    else if(ev.s) timeDisp = fmtT(ev.s) + ' onwards';
+    else if(ev.e) timeDisp = 'Until ' + fmtT(ev.e);
+
+    html+=`<div class="evb ${ev.c}${spCls}${onCls}" id="evb${key}"
+       style="top:${topPx}px;height:${htPx}px;left:${EV_L}px;right:4px"
+       onclick="selEv(${di},${ei})">
+      ${ev.book?'<span class="evb-flag flag-book">BOOK</span>':''}
+      ${ev.warn?'<span class="evb-flag flag-warn">!</span>':''}
+      <div class="evb-t">${timeDisp}</div>
+      <div class="evb-n">${nm}</div>
+      <div class="evb-l">${ev.loc}</div></div>`;
+  });
+  document.getElementById('cal-body').innerHTML=`<div class="cal-wrap" style="position:relative;height:${totH}px">${html}</div>`;
+}
+function selEv(di,ei){
+  const key=`${di}-${ei}`;
+  if(activeKey){const p=document.getElementById('evb'+activeKey);if(p)p.classList.remove('on');}
+  const dp=document.getElementById('dp');
+  if(activeKey===key){activeKey=null;dp.classList.remove('on');return;}
+  activeKey=key;
+  const blk=document.getElementById('evb'+key);
+  if(blk)blk.classList.add('on');
+  const ev=DAYS[di].ev[ei],day=DAYS[di];
+  document.getElementById('dp-cat').textContent=CAT_LBL[ev.c];
+  document.getElementById('dp-cat').style.color=CAT_CLR[ev.c];
+  document.getElementById('dp-name').textContent=ev.n;
+  
+  let timeDisp = '';
+  if(ev.s && ev.e) timeDisp = fmtT(ev.s) + ' – ' + fmtT(ev.e);
+  else if(ev.s) timeDisp = fmtT(ev.s) + ' onwards';
+  else if(ev.e) timeDisp = 'Until ' + fmtT(ev.e);
+  
+  document.getElementById('dp-meta').textContent=`${timeDisp}  ·  ${day.wd}, Day ${day.dt}  ·  ${ev.loc}`;
+  document.getElementById('dp-body').innerHTML=linkifyNotes(ev.notes||'');
+  const noteEl=document.getElementById('dp-note'),noteLbl=document.getElementById('dp-note-lbl'),noteTxt=document.getElementById('dp-note-txt');
+  if(ev.warn){
+    noteLbl.textContent='Warning';noteTxt.innerHTML=linkifyNotes(ev.notes||'');
+    noteEl.className='dp-note dp-warn';noteEl.style.display='block';
+  } else if(ev.book){
+    noteLbl.textContent='Booking required';
+    noteTxt.textContent='Advance booking required for this activity.';
+    noteEl.className='dp-note';noteEl.style.display='block';
+  } else {noteEl.style.display='none';}
+  dp.classList.add('on');
+  setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+}
+function buildFI(){
+  document.getElementById('fi-body').innerHTML=DAYS.map((day,di)=>`
+    <div class="fi-day">
+      <div class="fi-dhdr">
+        <div class="fi-dn">${String(di+1).padStart(2,'0')}</div>
+        <div><div class="fi-dd">${day.wd}, Day ${day.dt}</div><div class="fi-dc">${day.city}</div></div>
       </div>
-      <div class="fi-events">`;
-    day.events.forEach(ev => {
-      html += `<div class="fi-event fi-event-${ev.cat}">
-        <div class="fi-event-name">${ev.name}</div>
-        <div class="fi-event-time">${ev.time}</div>
-        <div class="fi-event-body">${ev.body}</div>
-        ${ev.tip ? `<div class="fi-event-tip">${ev.tip}</div>` : ''}
-      </div>`;
-    });
-    html += `</div></div>`;
-  });
-  container.innerHTML = html;
+      <div class="fi-evs">${day.ev.map(ev=>{
+        let timeDisp = '';
+        if(ev.s && ev.e) timeDisp = fmtT(ev.s) + ' – ' + fmtT(ev.e);
+        else if(ev.s) timeDisp = fmtT(ev.s) + ' onwards';
+        else if(ev.e) timeDisp = 'Until ' + fmtT(ev.e);
+        return `
+        <div class="fi-ev ${ev.c}">
+          <div class="fi-ev-time">${timeDisp}</div>
+          <div class="fi-ev-name">${ev.n}
+            ${ev.book?'<span class="fi-badge fi-badge-book">BOOK</span>':''}
+            ${ev.warn?'<span class="fi-badge fi-badge-warn">Note</span>':''}
+          </div>
+          <div class="fi-ev-loc">${ev.loc}</div>
+          <div class="fi-ev-body">${linkifyNotes(ev.notes||'')}</div>
+        </div>`}).join('')}
+      </div>
+    </div>`).join('');
 }
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', (tab === 'timeline' && i === 0) || (tab === 'itinerary' && i === 1));
-  });
-  document.getElementById('pane-timeline').classList.toggle('active',  tab === 'timeline');
-  document.getElementById('pane-itinerary').classList.toggle('active', tab === 'itinerary');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function switchTab(t){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(t==='cal'&&i===0)||(t==='fi'&&i===1)));
+  document.getElementById('pane-cal').classList.toggle('active',t==='cal');
+  document.getElementById('pane-fi').classList.toggle('active',t==='fi');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// Set last updated date
-document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-buildTimeline();
-buildItinerary();
+initActivities();
 </script>
 </body>
 </html>
