@@ -23,8 +23,9 @@ header h1 em{font-style:italic;color:#D4A055}
 .hdr-meta{margin-top:8px;font-size:13px;color:rgba(255,255,255,.4);position:relative}
 .hdr-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;position:relative}
 .hdr-pill{background:rgba(255,255,255,.1);border:.5px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 11px;font-size:12px;color:rgba(255,255,255,.65)}
-.tab-bar{background:var(--navy2);display:flex;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,0,0,.2)}
-.tab-btn{flex:1;padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s}
+.tab-bar{background:var(--navy2);display:flex;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,0,0,.2);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex:0 0 auto;padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;white-space:nowrap}
 .tab-btn.active{color:#fff;border-bottom-color:#D4A055;font-weight:500}
 main{max-width:840px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
 .pane{display:none}.pane.active{display:block}
@@ -95,6 +96,10 @@ main{max-width:840px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
 .fi-badge{display:inline-block;font-size:11px;font-weight:500;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
 .fi-badge-book{background:#FDE8E0;color:#802810}
 .fi-badge-warn{background:#FFF0D8;color:#7A3A00}
+.card{background:white;border-radius:10px;border:1px solid var(--border);box-shadow:0 2px 16px rgba(28,43,69,.08);padding:1.05rem 1.25rem;margin-top:1.0rem}
+.guide-wrap{display:flex;flex-direction:column;gap:10px}
+.guide-items{font-size:14px;line-height:1.75;color:var(--ink)}
+.guide-items a{color:var(--navy);text-decoration:underline}
 footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:var(--muted);border-top:1px solid var(--border);background:var(--parchment)}
 @media(max-width:480px){
   header{padding:1.75rem .875rem 1.5rem}
@@ -115,8 +120,8 @@ footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:var(--muted);b
   </div>
 </header>
 <nav class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('cal')">Calendar</button>
-  <button class="tab-btn" onclick="switchTab('fi')">Full itinerary</button>
+  <button class="tab-btn active" data-tab="cal" onclick="switchTab('cal')">Calendar</button>
+  <button class="tab-btn" data-tab="fi" onclick="switchTab('fi')">Full itinerary</button>
 </nav>
 <main>
   <div id="pane-cal" class="pane active">
@@ -141,15 +146,21 @@ footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:var(--muted);b
   <div id="pane-fi" class="pane">
     <div id="fi-body"></div>
   </div>
+  <div id="city-panes"></div>
 </main>
 <footer>Tap any block to see full details &amp; notes</footer>
 <script>
 const ACTIVITIES = [];
 let DAYS = [];
+const CITY_GUIDES = [];
 </script>
 <script src="activities/day1_flight_depart.js"></script>
 <script src="activities/day2_flight_arrive.js"></script>
 <script src="activities/day2_train_to_city.js"></script>
+<script src="cities/madrid.js"></script>
+<script src="cities/barcelona.js"></script>
+<script src="cities/segovia.js"></script>
+<script src="cities/toledo.js"></script>
 <script>
 // Group and sort the loaded activities
 function initActivities() {
@@ -170,6 +181,7 @@ function initActivities() {
   buildPicker();
   if (DAYS.length > 0) renderDay(0);
   buildFI();
+  initCityGuides();
 }
 const toMins=t=>{if(!t)return 0; const[h,m]=t.split(':').map(Number);return (h||0)*60+(m||0)};
 const fmtT=t=>{if(!t)return ''; const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM',hr=h>12?h-12:(h===0?12:h);return m===0?`${hr} ${ap}`:`${hr}:${String(m).padStart(2,'0')} ${ap}`};
@@ -184,10 +196,59 @@ function escapeHtml(s){
 
 function linkifyNotes(text){
   const safe = escapeHtml(text ?? '');
-  const withLinks = safe.replace(/\bhttps?:\/\/[^\s<]+/gi, url =>
+  const withBold = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const withLinks = withBold.replace(/\bhttps?:\/\/[^\s<]+/gi, url =>
     `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
   );
   return withLinks.replace(/\n/g,'<br>');
+}
+
+function initCityGuides(){
+  const panesHost=document.getElementById('city-panes');
+  if(!panesHost) return;
+  panesHost.innerHTML='';
+
+  const tabBar=document.querySelector('.tab-bar');
+  if(tabBar){
+    tabBar.querySelectorAll('.tab-btn[data-tab^="city-"]').forEach(b=>b.remove());
+  }
+
+  (CITY_GUIDES||[]).forEach(g=>{
+    const id=String(g.id||'').trim();
+    const name=String(g.name||id||'City').trim();
+    if(!id) return;
+
+    if(tabBar){
+      const btn=document.createElement('button');
+      btn.className='tab-btn';
+      btn.dataset.tab=`city-${id}`;
+      btn.textContent=name;
+      btn.onclick=()=>switchTab(`city-${id}`);
+      tabBar.appendChild(btn);
+    }
+
+    const pane=document.createElement('div');
+    pane.id=`pane-city-${id}`;
+    pane.className='pane';
+
+    const sections=Array.isArray(g.sections)?g.sections:[];
+    const secHtml=sections.map(sec=>{
+      const title=String(sec.title||'').trim();
+      const items=(Array.isArray(sec.items)?sec.items:[]).map(x=>String(x??'').trim()).filter(Boolean);
+      const bullets=items.length?items.map(t=>`• ${t}`).join('\n'):'—';
+      return `
+        <div class="card">
+          <div class="dp-cat">${escapeHtml(title||'Notes')}</div>
+          <div class="guide-items">${linkifyNotes(bullets)}</div>
+        </div>`;
+    }).join('');
+
+    pane.innerHTML=`
+      <div class="cal-hdr">${escapeHtml(name)} <span>City guide</span></div>
+      <div class="guide-wrap">${secHtml}</div>
+    `;
+    panesHost.appendChild(pane);
+  });
 }
 function buildPicker(){
   document.getElementById('picker').innerHTML=DAYS.map((d,i)=>
@@ -297,9 +358,10 @@ function buildFI(){
     </div>`).join('');
 }
 function switchTab(t){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(t==='cal'&&i===0)||(t==='fi'&&i===1)));
-  document.getElementById('pane-cal').classList.toggle('active',t==='cal');
-  document.getElementById('pane-fi').classList.toggle('active',t==='fi');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  const pane=document.getElementById('pane-'+t);
+  if(pane)pane.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 initActivities();
